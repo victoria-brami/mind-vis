@@ -140,7 +140,7 @@ class fLDM:
                         break
                 latent = item['fmri']
                 gt_image = rearrange(item['image'], 'h w c -> 1 c h w') # h w c
-                print(f"rendering {num_samples} examples in {ddim_steps} steps.")
+                print(f"[{count+1}/{len(fmri_embedding)}] rendering {num_samples} examples in {ddim_steps} steps.")
                 # assert latent.shape[-1] == self.fmri_latent_dim, 'dim error'
                 
                 c = model.get_learned_conditioning(repeat(latent, 'h w -> c h w', c=num_samples).to(self.device))
