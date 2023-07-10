@@ -68,7 +68,7 @@ def get_eval_metric(samples, avg=True):
 def get_args_parser():
     parser = argparse.ArgumentParser('Double Conditioning LDM Finetuning', add_help=False)
     # project parameters
-    parser.add_argument('--root', type=str, default='.')
+    parser.add_argument('--root', type=str, default='/content/mind-vis')
     parser.add_argument('--dataset', type=str, default='GOD')
 
     return parser
