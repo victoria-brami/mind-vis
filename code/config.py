@@ -31,7 +31,7 @@ class Config_MBM_fMRI(Config_MAE_fMRI):
         self.mlp_ratio = 1.0
 
         # Project setting
-        self.root_path = '.'
+        self.root_path = '/content/mind-vis'
         self.output_path = self.root_path
         self.seed = 2022
         self.roi = 'VC'
@@ -53,7 +53,7 @@ class Config_MBM_finetune(Config_MBM_finetune):
     def __init__(self):
         
         # Project setting
-        self.root_path = '.'
+        self.root_path = '/content/mind-vis'
         self.output_path = self.root_path
         self.kam_path = os.path.join(self.root_path, 'data/Kamitani/npz')
         self.bold5000_path = os.path.join(self.root_path, 'data/BOLD5000')
@@ -82,7 +82,7 @@ class Config_Generative_Model:
     def __init__(self):
         # project parameters
         self.seed = 2022
-        self.root_path = '.'
+        self.root_path = '/content/mind-vis'
         self.kam_path = os.path.join(self.root_path, 'data/Kamitani/npz')
         self.bold5000_path = os.path.join(self.root_path, 'data/BOLD5000')
         self.roi = 'VC'
