@@ -37,7 +37,7 @@ def wandb_init(config):
                 config=config,
                 reinit=True)
 
-def get_eval_metric(samples, avg=True):
+def get_eval_metric(samples, output_path='.', avg=True):
     metric_list = ['mse', 'pcc', 'ssim', 'psm']
     res_list = []
     
@@ -51,7 +51,9 @@ def get_eval_metric(samples, avg=True):
             pred_images = rearrange(np.stack(pred_images), 'n c h w -> n h w c')
             res = get_similarity_metric(pred_images, gt_images, method='pair-wise', metric_name=m)
             res_part.append(np.mean(res))
-        res_list.append(np.mean(res_part))     
+        res_list.append(np.mean(res_part))
+        with open(os.path.join(output_path,"sample_file.json"), "a") as f:
+          json.dump({m: res_list}, f)
     res_part = []
     for s in samples_to_run:
         pred_images = [img[s] for img in samples]
@@ -70,6 +72,7 @@ def get_args_parser():
     # project parameters
     parser.add_argument('--root', type=str, default='/content/mind-vis')
     parser.add_argument('--dataset', type=str, default='GOD')
+    parser.add_argument('--limit', type=int, default=20)
 
     return parser
 
@@ -79,6 +82,7 @@ if __name__ == '__main__':
     args = args.parse_args()
     root = args.root
     target = args.dataset
+    limit = args.limit
     model_path = os.path.join(root, 'pretrains', f'{target}', 'finetuned.pth')
   
     sd = torch.load(model_path, map_location='cpu')
@@ -124,7 +128,7 @@ if __name__ == '__main__':
     print('load ldm successfully')
     state = sd['state']
     grid, samples = generative_model.generate(dataset_test, config.num_samples, 
-                config.ddim_steps, config.HW, limit=None, state=state) # generate 10 instances
+                config.ddim_steps, config.HW, limit=limit, state=state) # generate 10 instances
     grid_imgs = Image.fromarray(grid.astype(np.uint8))
 
     os.makedirs(output_path, exist_ok=True)
