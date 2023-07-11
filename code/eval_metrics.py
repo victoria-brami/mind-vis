@@ -124,7 +124,9 @@ def n_way_top_k_acc(pred, class_id, n_way, num_trials=40, top_k=1):
 @torch.no_grad()
 def get_n_way_top_k_acc(pred_imgs, ground_truth, n_way, num_trials, top_k, device, return_std=False):
     weights = ViT_H_14_Weights.DEFAULT
-    model = vit_h_14(weights=weights)
+    # model = vit_h_14(weights=weights)
+    import torch
+    model = torch.hub.load("pytorch/vision", "vit_h_14", weights="DEFAULT")
     preprocess = weights.transforms()
     model = model.to(device)
     model = model.eval()
