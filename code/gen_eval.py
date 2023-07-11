@@ -136,7 +136,7 @@ if __name__ == '__main__':
 
     wandb_init(config)
     wandb.log({f'summary/samples_test': wandb.Image(grid_imgs)})
-    metric, metric_list = get_eval_metric(samples, avg=True)
+    metric, metric_list = get_eval_metric(samples, output_path=output_path, avg=True)
     metric_dict = {f'summary/pair-wise_{k}':v for k, v in zip(metric_list[:-2], metric[:-2])}
     metric_dict[f'summary/{metric_list[-2]}'] = metric[-2]
     metric_dict[f'summary/{metric_list[-1]}'] = metric[-1]
